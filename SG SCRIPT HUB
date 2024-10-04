@@ -17,9 +17,9 @@ tab1:CreateButton("Player Esp", function()
 		-- Create a highlight object
 		local highlight = Instance.new("Highlight")
 		highlight.OutlineColor = Color3.new(1, 1, 1) -- White
-		highlight.OutlineTransparency = 0.7 -- 50% transparent
+		highlight.OutlineTransparency = 0.5 -- 50% transparent
 		highlight.FillColor = Color3.new(1, 0, 0) -- Red
-		highlight.FillTransparency = 0.7 -- 50% transparent
+		highlight.FillTransparency = 0.5 -- 50% transparent
 
 		-- Function to update the highlights
 		local function updateHighlights()
@@ -39,7 +39,7 @@ tab1:CreateButton("Player Esp", function()
 		end
 
 		-- Call the function every second
-		while task.wait(2) do
+		while task.wait(5) do
 				updateHighlights()
 		end
 
