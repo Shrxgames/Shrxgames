@@ -39,7 +39,7 @@ tab1:CreateButton("Player Esp", function()
 		end
 
 		-- Call the function every second
-		while task.wait(3) do
+		while task.wait(2) do
 				updateHighlights()
 		end
 
