@@ -14,37 +14,55 @@ game:GetService("UserInputService").JumpRequest:connect(function()
 end)
 end)
 tab1:CreateButton("Player Esp", function()
-		-- Create a highlight object
-		local highlight = Instance.new("Highlight")
-		highlight.OutlineColor = Color3.new(1, 1, 1) -- White
-		highlight.OutlineTransparency = 0.5 -- 50% transparent
-		highlight.FillColor = Color3.new(1, 0, 0) -- Red
-		highlight.FillTransparency = 0.5 -- 50% transparent
+local FillColor = Color3.fromRGB(175,25,255)
+local DepthMode = "AlwaysOnTop"
+local FillTransparency = 0.5
+local OutlineColor = Color3.fromRGB(255,255,255)
+local OutlineTransparency = 0
 
-		-- Function to update the highlights
-		local function updateHighlights()
-				-- Loop through all players in the game
-				for _, player in pairs(game.Players:GetPlayers()) do
-						-- Get the player's character
-						local character = player.Character
+local CoreGui = game:FindService("CoreGui")
+local Players = game:FindService("Players")
+local lp = Players.LocalPlayer
+local connections = {}
 
-						-- Check if the character exists
-						if character then
-								-- Apply the highlight to the character
-								local characterHighlight = highlight:Clone()
-								characterHighlight.Parent = character
-								characterHighlight.Adornee = character
-						end
-				end
-		end
+local Storage = Instance.new("Folder")
+Storage.Parent = CoreGui
+Storage.Name = "Highlight_Storage"
 
-		-- Call the function every second
-		while task.wait(5) do
-				updateHighlights()
-		end
+local function Highlight(plr)
+    local Highlight = Instance.new("Highlight")
+    Highlight.Name = plr.Name
+    Highlight.FillColor = FillColor
+    Highlight.DepthMode = DepthMode
+    Highlight.FillTransparency = FillTransparency
+    Highlight.OutlineColor = OutlineColor
+    Highlight.OutlineTransparency = 0
+    Highlight.Parent = Storage
+    
+    local plrchar = plr.Character
+    if plrchar then
+        Highlight.Adornee = plrchar
+    end
 
-		-- Alternatively, you can use the RunService to update the highlights every frame
-		-- game:GetService("RunService").RenderStepped:Connect(updateHighlights)
+    connections[plr] = plr.CharacterAdded:Connect(function(char)
+        Highlight.Adornee = char
+    end)
+end
+
+Players.PlayerAdded:Connect(Highlight)
+for i,v in next, Players:GetPlayers() do
+    Highlight(v)
+end
+
+Players.PlayerRemoving:Connect(function(plr)
+    local plrname = plr.Name
+    if Storage[plrname] then
+        Storage[plrname]:Destroy()
+    end
+    if connections[plr] then
+        connections[plr]:Disconnect()
+    end
+end)
 end)
 tab1:CreateButton("Hitbox", function()
 _G.HeadSize = 13
