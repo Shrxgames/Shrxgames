@@ -1,1 +1,139 @@
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Shrxgames/Shrxgames/refs/heads/main/SG%20SCRIPT%20HUB"))()
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local Window = OrionLib:MakeWindow({Name = "SG SCRIPT HUB", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
+local Tab = Window:MakeTab({
+	Name = "Main",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+local Section = Tab:AddSection({
+	Name = "Main Script"
+})
+OrionLib:MakeNotification({
+	Name = "PLAYER",
+	Content = "WELCOME TO SG SCRIPT HUB",
+	Image = "rbxassetid://4483345998",
+	Time = 7
+})
+Tab:AddButton({
+	Name = "Infinite Jump",
+	Callback = function()
+      		local InfiniteJumpEnabled = true
+game:GetService("UserInputService").JumpRequest:connect(function()
+	if InfiniteJumpEnabled then
+		game:GetService"Players".LocalPlayer.Character:FindFirstChildOfClass'Humanoid':ChangeState("Jumping")
+	end
+end)
+  	end    
+})
+Tab:AddButton({
+	Name = "Players Esp",
+	Callback = function()
+      		local FillColor = Color3.fromRGB(175,25,255)
+local DepthMode = "AlwaysOnTop"
+local FillTransparency = 0.5
+local OutlineColor = Color3.fromRGB(255,255,255)
+local OutlineTransparency = 0
+
+local CoreGui = game:FindService("CoreGui")
+local Players = game:FindService("Players")
+local lp = Players.LocalPlayer
+local connections = {}
+
+local Storage = Instance.new("Folder")
+Storage.Parent = CoreGui
+Storage.Name = "Highlight_Storage"
+
+local function Highlight(plr)
+    local Highlight = Instance.new("Highlight")
+    Highlight.Name = plr.Name
+    Highlight.FillColor = FillColor
+    Highlight.DepthMode = DepthMode
+    Highlight.FillTransparency = FillTransparency
+    Highlight.OutlineColor = OutlineColor
+    Highlight.OutlineTransparency = 0
+    Highlight.Parent = Storage
+    
+    local plrchar = plr.Character
+    if plrchar then
+        Highlight.Adornee = plrchar
+    end
+
+    connections[plr] = plr.CharacterAdded:Connect(function(char)
+        Highlight.Adornee = char
+    end)
+end
+
+Players.PlayerAdded:Connect(Highlight)
+for i,v in next, Players:GetPlayers() do
+    Highlight(v)
+end
+
+Players.PlayerRemoving:Connect(function(plr)
+    local plrname = plr.Name
+    if Storage[plrname] then
+        Storage[plrname]:Destroy()
+    end
+    if connections[plr] then
+        connections[plr]:Disconnect()
+    end
+end)
+  	end    
+})
+Tab:AddButton({
+	Name = "Players Hitbox",
+	Callback = function()
+      		_G.HeadSize = 15
+_G.Disabled = true
+ 
+game:GetService('RunService').RenderStepped:connect(function()
+if _G.Disabled then
+for i,v in next, game:GetService('Players'):GetPlayers() do
+if v.Name ~= game:GetService('Players').LocalPlayer.Name then
+pcall(function()
+v.Character.HumanoidRootPart.Size = Vector3.new(_G.HeadSize,_G.HeadSize,_G.HeadSize)
+v.Character.HumanoidRootPart.Transparency = 0.7
+v.Character.HumanoidRootPart.BrickColor = BrickColor.new("Really black")
+v.Character.HumanoidRootPart.Material = "Neon"
+v.Character.HumanoidRootPart.CanCollide = false
+end)
+end
+end
+end
+end)
+
+  	end    
+})
+Tab:AddTextbox({
+	Name = "Walk Speed",
+	Default = "Speed",
+	TextDisappear = true,
+	Callback = function(Value)
+	game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
+	end	  
+})
+local Tab = Window:MakeTab({
+	Name = "Animation And Emote",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+local Section = Tab:AddSection({
+	Name = "All Animation Script and Emote"
+})
+Tab:AddButton({
+	Name = "AFEM",
+	Callback = function()
+      		loadstring(game:HttpGet("https://yarhm.goteamst.com/scr?channel=afem", false))()
+  	end    
+})
+Tab:AddButton({
+	Name = "Gazer Fe Animation",
+	Callback = function()
+      		loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Gazer-FE-Animation-Editor-14508"))()
+  	end    
+})
+Tab:AddButton({
+	Name = "R15 Emote Animation",
+	Callback = function()
+      		loadstring(game:HttpGet(('https://pastebin.com/raw/1p6xnBNf'),true))()
+  	end    
+})
