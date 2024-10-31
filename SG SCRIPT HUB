@@ -82,7 +82,7 @@ end)
 Tab:AddButton({
 	Name = "Players Hitbox",
 	Callback = function()
-      		_G.HeadSize = 15
+      		_G.HeadSize = 13
 _G.Disabled = true
  
 game:GetService('RunService').RenderStepped:connect(function()
